@@ -1,22 +1,17 @@
-import { Link } from 'react-router-dom';  // Import Link for routing
+import { Link } from 'react-router-dom';
 
 function Navbar() {
   return (
-    <nav className="bg-blue-600 text-white p-4">
-      <ul className="flex justify-around">
-        <li>
-          <Link to="/" className="hover:text-gray-200">Home</Link>
-        </li>
-        <li>
-          <Link to="/patients" className="hover:text-gray-200">Patients</Link>
-        </li>
-        <li>
-          <Link to="/doctors" className="hover:text-gray-200">Doctors</Link>
-        </li>
-        <li>
-          <Link to="/contact" className="hover:text-gray-200">Contact</Link>
-        </li>
-      </ul>
+    <nav className="navbar">
+      <div className="container mx-auto flex justify-between items-center">
+        <h1 className="text-xl font-bold">MediChain</h1>
+        <div className="space-x-4">
+          <Link to="/" className="hover:underline">Home</Link>
+          <Link to="/patients" className="hover:underline">Patients</Link>
+          <Link to="/doctors" className="hover:underline">Doctors</Link>
+          <Link to="/contact" className="hover:underline">Contact</Link>
+        </div>
+      </div>
     </nav>
   );
 }
