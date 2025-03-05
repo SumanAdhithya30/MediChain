@@ -1,19 +1,18 @@
-import React, { useState } from 'react';
-import { ethers } from 'ethers';
+import React, { useState } from "react";
+import { ethers } from "ethers";
 import { contractAddress, contractABI } from "../utils/constants";
-
 
 function Patients() {
   const [patientData, setPatientData] = useState({
-    name: '',
-    gender: '',
-    age: '',
-    diagnosis: '',
-    prescription: '',
-    ipfsHash: '',
+    name: "",
+    gender: "",
+    age: "",
+    diagnosis: "",
+    prescription: "",
+    ipfsHash: "",
   });
 
-  const [doctorAddress, setDoctorAddress] = useState('');
+  const [doctorAddress, setDoctorAddress] = useState("");
   const [patientRecord, setPatientRecord] = useState(null);
 
   // Handle setting the patient's record
@@ -52,10 +51,10 @@ function Patients() {
     const provider = new ethers.BrowserProvider(window.ethereum);
     const signer = await provider.getSigner();
     const contract = new ethers.Contract(contractAddress, contractABI, signer);
-  
+
     try {
       const record = await contract.viewMyRecord();
-      console.log("Fetched record:", record); // Log the full returned data
+      console.log("Fetched record:", record);
       setPatientRecord({
         name: record[0],
         gender: record[1],
@@ -65,80 +64,113 @@ function Patients() {
         ipfsHash: record[5],
       });
     } catch (error) {
-      console.error('Error fetching record:', error);
+      console.error("Error fetching record:", error);
     }
   };
-  
 
   return (
-    <div className="container">
-      <h2>Patient Actions</h2>
-      
+    <div className="container mx-auto p-6">
+      <h2 className="text-3xl font-bold text-center mb-6">Patient Actions</h2>
+
       {/* Set Record Form */}
-      <form onSubmit={handleSetRecord}>
-        <h3>Set Your Medical Record</h3>
-        <input
-          type="text"
-          placeholder="Name"
-          value={patientData.name}
-          onChange={(e) => setPatientData({ ...patientData, name: e.target.value })}
-        />
-        <input
-          type="text"
-          placeholder="Gender"
-          value={patientData.gender}
-          onChange={(e) => setPatientData({ ...patientData, gender: e.target.value })}
-        />
-        <input
-          type="number"
-          placeholder="Age"
-          value={patientData.age}
-          onChange={(e) => setPatientData({ ...patientData, age: e.target.value })}
-        />
-        <input
-          type="text"
-          placeholder="Diagnosis"
-          value={patientData.diagnosis}
-          onChange={(e) => setPatientData({ ...patientData, diagnosis: e.target.value })}
-        />
-        <input
-          type="text"
-          placeholder="Prescription"
-          value={patientData.prescription}
-          onChange={(e) => setPatientData({ ...patientData, prescription: e.target.value })}
-        />
-        <input
-          type="text"
-          placeholder="IPFS Hash (Optional)"
-          value={patientData.ipfsHash}
-          onChange={(e) => setPatientData({ ...patientData, ipfsHash: e.target.value })}
-        />
-        <button type="submit">Save Record</button>
+      <form
+        onSubmit={handleSetRecord}
+        className="bg-white shadow-md rounded-lg p-6 mb-6"
+      >
+        <h3 className="text-xl font-semibold mb-4">Set Your Medical Record</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <input
+            type="text"
+            placeholder="Name"
+            value={patientData.name}
+            onChange={(e) =>
+              setPatientData({ ...patientData, name: e.target.value })
+            }
+            className="input-field"
+          />
+          <input
+            type="text"
+            placeholder="Gender"
+            value={patientData.gender}
+            onChange={(e) =>
+              setPatientData({ ...patientData, gender: e.target.value })
+            }
+            className="input-field"
+          />
+          <input
+            type="number"
+            placeholder="Age"
+            value={patientData.age}
+            onChange={(e) =>
+              setPatientData({ ...patientData, age: e.target.value })
+            }
+            className="input-field"
+          />
+          <input
+            type="text"
+            placeholder="Diagnosis"
+            value={patientData.diagnosis}
+            onChange={(e) =>
+              setPatientData({ ...patientData, diagnosis: e.target.value })
+            }
+            className="input-field"
+          />
+          <input
+            type="text"
+            placeholder="Prescription"
+            value={patientData.prescription}
+            onChange={(e) =>
+              setPatientData({ ...patientData, prescription: e.target.value })
+            }
+            className="input-field"
+          />
+          <input
+            type="text"
+            placeholder="IPFS Hash (Optional)"
+            value={patientData.ipfsHash}
+            onChange={(e) =>
+              setPatientData({ ...patientData, ipfsHash: e.target.value })
+            }
+            className="input-field"
+          />
+        </div>
+        <button type="submit" className="btn-primary mt-4">
+          Save Record
+        </button>
       </form>
 
       {/* Grant Doctor Access Form */}
-      <form onSubmit={handleGrantAccess}>
-        <h3>Grant Doctor Access</h3>
+      <form
+        onSubmit={handleGrantAccess}
+        className="bg-white shadow-md rounded-lg p-6 mb-6"
+      >
+        <h3 className="text-xl font-semibold mb-4">Grant Doctor Access</h3>
         <input
           type="text"
           placeholder="Doctor's Address"
           value={doctorAddress}
           onChange={(e) => setDoctorAddress(e.target.value)}
+          className="input-field w-full"
         />
-        <button type="submit">Grant Access</button>
+        <button type="submit" className="btn-primary mt-4">
+          Grant Access
+        </button>
       </form>
 
       {/* View Record Button */}
-      <button onClick={handleViewRecord}>View My Record</button>
+      <button onClick={handleViewRecord} className="btn-secondary">
+        View My Record
+      </button>
+
       {patientRecord && (
-        <div>
-          <h3>Your Record</h3>
-          <p>Name: {patientRecord.name}</p>
-          <p>Gender: {patientRecord.gender}</p>
-          <p>Age: {patientRecord.age}</p>
-          <p>Diagnosis: {patientRecord.diagnosis}</p>
-          <p>Prescription: {patientRecord.prescription}</p>
-          <p>IPFS Hash: {patientRecord.ipfsHash}</p>
+        <div className="bg-gray-100 p-6 rounded-lg shadow-md mt-6">
+          <h3 className="text-xl font-semibold mb-4">Your Record</h3>
+          <p><strong>Name:</strong> {patientRecord.name}</p>
+          <p><strong>Gender:</strong> {patientRecord.gender}</p>
+          <p><strong>Age:</strong> {patientRecord.age}</p>
+          <p><strong>Diagnosis:</strong> {patientRecord.diagnosis}</p>
+          <p><strong>Prescription:</strong> {patientRecord.prescription}</p>
+          <p><strong>IPFS Hash:</strong> {patientRecord.ipfsHash}</p>
         </div>
       )}
     </div>
