@@ -15,9 +15,7 @@ function Doctors() {
   const handleViewRecord = async () => {
     setError('');
     setPatientRecord(null);
-    console.log("Fetching record for patient with address:", patientAddress);
   
-    // Validate patient address using ethers v6 method
     if (!ethers.isAddress(patientAddress)) {
       setError("Invalid patient address format!");
       return;
@@ -28,21 +26,15 @@ function Doctors() {
       const signer = await provider.getSigner();
       const contract = new ethers.Contract(contractAddress, contractABI, signer);
   
-      // Check if doctor has access to the patient's record
       const doctorAddress = await signer.getAddress();
       const accessDoctor = await contract.doctorAccess(patientAddress);
-      
-      console.log("Doctor address:", doctorAddress);
-      console.log("Access granted to:", accessDoctor);
       
       if (accessDoctor.toLowerCase() !== doctorAddress.toLowerCase()) {
         setError("You do not have access to this patient's record.");
         return;
       }
   
-      // Fetch patient record
       const record = await contract.viewPatientRecord(patientAddress);
-      console.log("Fetched patient record:", record);
   
       setPatientRecord({
         name: record[0],
@@ -53,7 +45,6 @@ function Doctors() {
         ipfsHash: record[5],
       });
     } catch (error) {
-      console.error('Error fetching record:', error);
       setError(`Error: ${error.message || "Failed to fetch record"}`);
     }
   };
@@ -63,9 +54,7 @@ function Doctors() {
     e.preventDefault();
     setError('');
     setSuccessMessage('');
-    console.log("Updating record for patient:", updatePatientAddress);
   
-    // Validate patient address using ethers v6 method
     if (!ethers.isAddress(updatePatientAddress)) {
       setError("Invalid patient address format!");
       return;
@@ -76,7 +65,6 @@ function Doctors() {
       const signer = await provider.getSigner();
       const contract = new ethers.Contract(contractAddress, contractABI, signer);
   
-      // Check if doctor has access to update the record
       const doctorAddress = await signer.getAddress();
       const accessDoctor = await contract.doctorAccess(updatePatientAddress);
       
@@ -85,102 +73,97 @@ function Doctors() {
         return;
       }
   
-      // Update the patient's record
       const tx = await contract.updateRecord(updatePatientAddress, doctorDiagnosis, doctorPrescription);
       await tx.wait();
       setSuccessMessage("Patient record updated successfully!");
       
-      // Clear form fields after successful update
       setDoctorDiagnosis('');
       setDoctorPrescription('');
     } catch (error) {
-      console.error("Error updating record:", error);
       setError(`Error: ${error.message || "Failed to update record"}`);
     }
   };
 
   return (
-    <div className="container">
-      <h2>Doctor Actions</h2>
-      
-      {error && <div className="error-message">{error}</div>}
-      {successMessage && <div className="success-message">{successMessage}</div>}
+    <div className="max-w-4xl mx-auto p-6 bg-gray-100 rounded-lg shadow-md">
+      <h2 className="text-2xl font-bold text-center text-gray-800 mb-4">Doctor Actions</h2>
+
+      {error && <div className="text-red-600 font-semibold text-center">{error}</div>}
+      {successMessage && <div className="text-green-600 font-semibold text-center">{successMessage}</div>}
       
       {/* View Patient Record Form */}
-      <div className="form-section">
-        <h3>View Patient Record</h3>
-        <form onSubmit={(e) => { e.preventDefault(); handleViewRecord(); }}>
-          <div className="form-field">
-            <label>Patient's Address:</label>
+      <div className="bg-white p-4 rounded-lg shadow-md mb-6">
+        <h3 className="text-xl font-semibold text-gray-700 mb-2">View Patient Record</h3>
+        <form onSubmit={(e) => { e.preventDefault(); handleViewRecord(); }} className="space-y-4">
+          <div>
+            <label className="block text-gray-600">Patient's Address:</label>
             <input
               type="text"
               placeholder="0x..."
               value={patientAddress}
               onChange={(e) => setPatientAddress(e.target.value)}
               required
+              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
           </div>
-          <button type="submit">View Record</button>
+          <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition">
+            View Record
+          </button>
         </form>
       </div>
 
       {patientRecord && (
-        <div className="record-display">
-          <h3>Patient Record</h3>
-          <div className="record-field">
-            <strong>Name:</strong> {patientRecord.name}
-          </div>
-          <div className="record-field">
-            <strong>Gender:</strong> {patientRecord.gender}
-          </div>
-          <div className="record-field">
-            <strong>Age:</strong> {patientRecord.age}
-          </div>
-          <div className="record-field">
-            <strong>Diagnosis:</strong> {patientRecord.diagnosis}
-          </div>
-          <div className="record-field">
-            <strong>Prescription:</strong> {patientRecord.prescription}
-          </div>
-          <div className="record-field">
-            <strong>IPFS Hash:</strong> {patientRecord.ipfsHash}
+        <div className="bg-white p-4 rounded-lg shadow-md">
+          <h3 className="text-xl font-semibold text-gray-700 mb-3">Patient Record</h3>
+          <div className="space-y-2">
+            <div><strong>Name:</strong> {patientRecord.name}</div>
+            <div><strong>Gender:</strong> {patientRecord.gender}</div>
+            <div><strong>Age:</strong> {patientRecord.age}</div>
+            <div><strong>Diagnosis:</strong> {patientRecord.diagnosis}</div>
+            <div><strong>Prescription:</strong> {patientRecord.prescription}</div>
+            <div><strong>IPFS Hash:</strong> {patientRecord.ipfsHash}</div>
           </div>
         </div>
       )}
 
       {/* Update Patient Record Form */}
-      <div className="form-section">
-        <h3>Update Patient Record</h3>
-        <form onSubmit={handleUpdateRecord}>
-          <div className="form-field">
-            <label>Patient's Address:</label>
+      <div className="bg-white p-4 rounded-lg shadow-md mt-6">
+        <h3 className="text-xl font-semibold text-gray-700 mb-2">Update Patient Record</h3>
+        <form onSubmit={handleUpdateRecord} className="space-y-4">
+          <div>
+            <label className="block text-gray-600">Patient's Address:</label>
             <input
               type="text"
               placeholder="0x..."
               value={updatePatientAddress}
               onChange={(e) => setUpdatePatientAddress(e.target.value)}
               required
+              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
           </div>
-          <div className="form-field">
-            <label>New Diagnosis:</label>
+          <div>
+            <label className="block text-gray-600">New Diagnosis:</label>
             <textarea
               placeholder="Enter updated diagnosis"
               value={doctorDiagnosis}
               onChange={(e) => setDoctorDiagnosis(e.target.value)}
               required
+              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
           </div>
-          <div className="form-field">
-            <label>New Prescription:</label>
+          <div>
+            <label className="block text-gray-600">New Prescription:</label>
             <textarea
               placeholder="Enter updated prescription"
               value={doctorPrescription}
               onChange={(e) => setDoctorPrescription(e.target.value)}
               required
+              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
           </div>
-          <button type="submit">Update Record</button>
+          <button type="submit" className="w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition">
+            Update Record
+          </button>
         </form>
       </div>
     </div>
