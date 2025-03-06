@@ -8,31 +8,31 @@ function HomePage() {
         <h2 className="text-4xl font-bold">Secure & Decentralized Healthcare</h2>
         <p className="mt-4">MediChain provides a blockchain-based solution for secure medical records.</p>
       </section>
-      
+      <br></br>
       {/* Features Section */}
       <section className="p-10 text-center">
         <h3 className="text-3xl font-semibold">Why Choose MediChain?</h3>
         <p className="mt-2">Providing security, transparency, and accessibility for medical records.</p>
       </section>
-
+      <br></br>
       {/* How It Works */}
       <section className="bg-gray-100 p-10 text-center">
         <h3 className="text-3xl font-semibold">How It Works</h3>
         <p className="mt-2">Patients own their records, and doctors can update them securely.</p>
       </section>
-
+      <br></br>
       {/* Testimonials */}
       <section className="p-10 text-center">
         <h3 className="text-3xl font-semibold">Testimonials</h3>
         <p className="mt-2">See what our users say about MediChain.</p>
       </section>
-
+      <br></br>
       {/* Latest News */}
       <section className="bg-gray-100 p-10 text-center">
         <h3 className="text-3xl font-semibold">Latest Updates</h3>
         <p className="mt-2">Stay updated with our latest developments.</p>
       </section>
-
+      <br></br>
       {/* Call to Action */}
       <section className="p-10 text-center">
         <h3 className="text-3xl font-semibold">Get Started Today</h3>
