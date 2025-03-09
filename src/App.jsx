@@ -44,22 +44,29 @@
 // export default App;
 // src/App.jsx
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { useState } from "react"; 
 import HomePage from './pages/HomePage';
 import ContactPage from './pages/ContactPage';
 import Patients from './pages/Patients';
 import Doctors from './pages/Doctors';
-import Navbar from './components/Navbar';  // Assuming you have a Navbar component
+import Navbar from './components/Navbar';  
+import Login from "./pages/Login";
 
 function App() {
+  const [userRole, setUserRole] = useState(null); // ✅ State defined and now used
+
   return (
     <Router>
-      <Navbar />  {/* Add Navbar here */}
+      <Navbar />  
       <div className="App">
+        {/* ✅ Display user role in console or UI */}
+        {userRole && <p className="text-center">Logged in as: {userRole}</p>}
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/patients" element={<Patients />} />
           <Route path="/doctors" element={<Doctors />} />
           <Route path="/contact" element={<ContactPage />} />
+          <Route path="/login" element={<Login setUserRole={setUserRole} />} />
         </Routes>
       </div>
     </Router>
@@ -67,3 +74,5 @@ function App() {
 }
 
 export default App;
+
+
