@@ -124,7 +124,6 @@ MediChain delivers a reliable and innovative approach to healthcare data managem
 ## 🧑‍💻 Contributors
 | Name | Role |
 |------|------|
-| 🧠 You | Developer & Architect |
-| 🤖 ChatGPT | Partner-in-Code, UI/UX Ideas, and Smart Contract Guidance |
+| 🧠 Me | Developer & Architect |
 
 Made with ❤️ by MediChain Team – Because your health data deserves blockchain-level security.
