@@ -1,39 +1,41 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
+// ✅ Import images properly
+import healthcareImg from "../assets/istockphoto-1301652887-2048x2048.jpg";
+import blockchainWorkflowImg from "../assets/blockchain_healthcare_square.png";
+
 function HomePage() {
   const navigate = useNavigate();
 
   return (
     <div className="pt-16 font-sans text-gray-800">
       {/* Hero Section */}
-{/* Hero Section */}
-<section className="bg-blue-50 py-16 px-4 flex flex-col md:flex-row items-center justify-between">
-  <div className="md:w-1/2 text-center md:text-left mb-10 md:mb-0 flex flex-col items-center">
-    <h1 className="text-5xl font-extrabold leading-tight text-blue-700 text-center">
-      Revolutionizing Healthcare with Blockchain
-    </h1>
-    <p className="mt-6 text-lg text-gray-700 max-w-xl text-center">
-      Welcome to MediChain – your gateway to secure, decentralized, and transparent healthcare record management. 
-      Empowering both patients and doctors, we ensure that your health data is owned and accessible only by you. 
-      Say goodbye to data silos and hello to modern, efficient, and tamper-proof healthcare experiences.
-    </p>
-    <button 
-      onClick={() => navigate("/login")}
-      className="mt-8 px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:scale-105 transition duration-300"
-    >
-      Get Started
-    </button>
-  </div>
-  <div className="md:w-1/2">
-    <img 
-      src="src\assets\istockphoto-1301652887-2048x2048.jpg" 
-      alt="Healthcare illustration" 
-      className="w-full max-w-3xl rounded-xl shadow-lg"
-    />
-  </div>
-</section>
-
+      <section className="bg-blue-50 py-16 px-4 flex flex-col md:flex-row items-center justify-between">
+        <div className="md:w-1/2 text-center md:text-left mb-10 md:mb-0 flex flex-col items-center">
+          <h1 className="text-5xl font-extrabold leading-tight text-blue-700 text-center">
+            Revolutionizing Healthcare with Blockchain
+          </h1>
+          <p className="mt-6 text-lg text-gray-700 max-w-xl text-center">
+            Welcome to MediChain – your gateway to secure, decentralized, and transparent healthcare record management. 
+            Empowering both patients and doctors, we ensure that your health data is owned and accessible only by you. 
+            Say goodbye to data silos and hello to modern, efficient, and tamper-proof healthcare experiences.
+          </p>
+          <button 
+            onClick={() => navigate("/login")}
+            className="mt-8 px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:scale-105 transition duration-300"
+          >
+            Get Started
+          </button>
+        </div>
+        <div className="md:w-1/2">
+          <img 
+            src={healthcareImg}
+            alt="Healthcare illustration" 
+            className="w-full max-w-3xl rounded-xl shadow-lg"
+          />
+        </div>
+      </section>
 
       {/* Features Section */}
       <section className="py-16 px-6 bg-white text-center">
@@ -64,7 +66,7 @@ function HomePage() {
           Our platform is built on Ethereum-based smart contracts. Patients log in using their unique blockchain wallet, manage their records securely, and doctors can request access to update health data in a transparent and verifiable way.
         </p>
         <img 
-          src="src\assets\blockchain_healthcare_square.png "
+          src={blockchainWorkflowImg}
           alt="Workflow"
           className="mx-auto rounded-lg shadow-lg w-80 md:w-[500px]"
         />
